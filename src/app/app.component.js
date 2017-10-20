@@ -8,10 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var heroes_component_1 = require("./heroes.component");
 router_1.RouterModule.forRoot([
     {
         path: 'heroes',
-        component: HeroesComponent
+        component: heroes_component_1.HeroesComponent
     }
 ]);
 var AppComponent = (function () {

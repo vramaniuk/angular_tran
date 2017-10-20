@@ -9,37 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("rxjs/add/operator/switchMap");
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var common_1 = require("@angular/common");
 var hero_service_1 = require("./hero.service");
-var HeroDetailComponent = (function () {
-    function HeroDetailComponent(heroService, route, location) {
+var HeroesComponent = (function () {
+    function HeroesComponent(router, heroService) {
+        this.router = router;
         this.heroService = heroService;
-        this.route = route;
-        this.location = location;
     }
-    HeroDetailComponent.prototype.ngOnInit = function () {
+    HeroesComponent.prototype.getHeroes = function () {
         var _this = this;
-        this.route.paramMap
-            .switchMap(function (params) { return _this.heroService.getHero(+params.get('id')); })
-            .subscribe(function (hero) { return _this.hero = hero; });
+        this.heroService.getHeroes().then(function (heroes) { return _this.heroes = heroes; });
     };
-    HeroDetailComponent.prototype.goBack = function () {
-        this.location.back();
+    HeroesComponent.prototype.ngOnInit = function () {
+        this.getHeroes();
     };
-    return HeroDetailComponent;
+    HeroesComponent.prototype.onSelect = function (hero) {
+        this.selectedHero = hero;
+    };
+    HeroesComponent.prototype.gotoDetail = function () {
+        this.router.navigate(['/detail', this.selectedHero.id]);
+    };
+    return HeroesComponent;
 }());
-HeroDetailComponent = __decorate([
+HeroesComponent = __decorate([
     core_1.Component({
-        selector: 'hero-detail',
-        templateUrl: './hero-detail.component.html',
-        styleUrls: ['./hero-detail.component.css']
+        selector: 'my-heroes',
+        templateUrl: './heroes.component.html',
+        styleUrls: ['./heroes.component.css']
     }),
-    __metadata("design:paramtypes", [hero_service_1.HeroService,
-        router_1.ActivatedRoute,
-        common_1.Location])
-], HeroDetailComponent);
-exports.HeroDetailComponent = HeroDetailComponent;
-//# sourceMappingURL=hero-detail.component.js.map
+    __metadata("design:paramtypes", [router_1.Router,
+        hero_service_1.HeroService])
+], HeroesComponent);
+exports.HeroesComponent = HeroesComponent;
+//# sourceMappingURL=heroes.component.js.map
